@@ -1,7 +1,9 @@
 package rewards;
 
+import config.AspectsConfig;
 import javax.sql.DataSource;
 
+import org.aspectj.lang.annotation.Aspect;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
@@ -15,8 +17,9 @@ import config.RewardsConfig;
  * Save all your work, run the LoggingAspectTests.  It should pass, 
  * and you should see one line of LoggingAspect output in the console.	 
  */
+@Aspect
 @Configuration
-@Import({RewardsConfig.class})
+@Import({RewardsConfig.class, AspectsConfig.class})
 public class SystemTestConfig {
 
 	
