@@ -28,57 +28,60 @@ import rewards.internal.account.Account;
 // TODO-16 (Optional): Perform security testing for the two users added
 //          through custom UserDetailsService
 // - Take some time to understand what each test is for
-// - Remove @Disabled annotation from each test and run it
+// - Remove  annotation from each test and run it
 // - Make sure all tests pass
 
 @WebMvcTest(AccountController.class)
-@ContextConfiguration(classes = {RestWsApplication.class, RestSecurityConfig.class, CustomUserDetailsService.class})
+@ContextConfiguration(classes = {RestWsApplication.class, RestSecurityConfig.class,
+    CustomUserDetailsService.class})
 public class AccountControllerCustomUserDetailsServiceTests {
 
-    @Autowired
-    private MockMvc mockMvc;
+  @Autowired
+  private MockMvc mockMvc;
 
-    @MockBean
-    private AccountManager accountManager;
+  @MockBean
+  private AccountManager accountManager;
 
-    @MockBean
-    private AccountService accountService;
+  @MockBean
+  private AccountService accountService;
 
-    @Test
-    @Disabled
-    @WithUserDetails("joe")
-    public void accountDetails_with_joe_credentials_should_return_200() throws Exception {
+  @Test
 
-        // arrange
-        given(accountManager.getAccount(0L)).willReturn(new Account("1234567890", "John Doe"));
+  @WithUserDetails("joe")
+  public void accountDetails_with_joe_credentials_should_return_200() throws Exception {
 
-        // act and assert
-        mockMvc.perform(get("/accounts/0")).andExpect(status().isOk())
-               .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-               .andExpect(jsonPath("name").value("John Doe")).andExpect(jsonPath("number").value("1234567890"));
+    // arrange
+    given(accountManager.getAccount(0L)).willReturn(new Account("1234567890", "John Doe"));
 
-        // verify
-        verify(accountManager).getAccount(0L);
+    // act and assert
+    mockMvc.perform(get("/accounts/0")).andExpect(status().isOk())
+        .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+        .andExpect(jsonPath("name").value("John Doe"))
+        .andExpect(jsonPath("number").value("1234567890"));
 
-    }
+    // verify
+    verify(accountManager).getAccount(0L);
 
-    @Test
-    @Disabled
-    @WithUserDetails("mary")
-    public void accountDetails_with_mary_credentials_should_return_200() throws Exception {
+  }
 
-        // arrange
-        given(accountManager.getAccount(0L)).willReturn(new Account("1234567890", "John Doe"));
+  @Test
 
-        // act and assert
-        mockMvc.perform(get("/accounts/0")).andExpect(status().isOk())
-               .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-               .andExpect(jsonPath("name").value("John Doe")).andExpect(jsonPath("number").value("1234567890"));
+  @WithUserDetails("mary")
+  public void accountDetails_with_mary_credentials_should_return_200() throws Exception {
 
-        // verify
-        verify(accountManager).getAccount(0L);
+    // arrange
+    given(accountManager.getAccount(0L)).willReturn(new Account("1234567890", "John Doe"));
 
-    }
+    // act and assert
+    mockMvc.perform(get("/accounts/0")).andExpect(status().isOk())
+        .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+        .andExpect(jsonPath("name").value("John Doe"))
+        .andExpect(jsonPath("number").value("1234567890"));
+
+    // verify
+    verify(accountManager).getAccount(0L);
+
+  }
 
 }
 
